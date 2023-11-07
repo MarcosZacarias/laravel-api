@@ -54,13 +54,13 @@ class ProjectController extends Controller
     {
         $data = $request->validated();
         $project = new Project;
-        $project->fill($data);
         $project->slug = Str::slug($project->name);
-
+        
         if ($request->hasFile('cover_img')) {
-        $project->cover_img = Storage::put('uploads/projects/cover_img', $data['cover_img']);
+            $data['cover_img'] = Storage::put('uploads/projects/cover_img', $data['cover_img']);
         }
-
+                
+        $project->fill($data);
         $project->save();
         
         // dd($data['technologies']);
@@ -104,20 +104,17 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
-        $data = $request->validated();
-        $project->fill($data);
+        $data = $request->validated();        
         $project->slug = Str::slug($project->name);
-
         
         if ($request->hasFile('cover_img')) {
             if ($project->cover_img) {
                 Storage::delete($project->cover_img);
-                // dd($project);
             }
-            $cover_img_path = Storage::put('uploads/projects/cover_img', $data['cover_img']);
-            $project->cover_img = $cover_img_path;
+            $data['cover_img'] = Storage::put('uploads/projects/cover_img', $data['cover_img']);
         };
-        
+
+        $project->fill($data);
         $project->save();
 
         if(Arr::exists($data, "technologies"))
