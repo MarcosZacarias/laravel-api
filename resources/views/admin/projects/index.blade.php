@@ -14,7 +14,7 @@
         <button class="btn btn-outline-primary mb-3">Create new project</button>
     </a>
 
-    <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
+    <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-4">
       @forelse ($projects as $project)
       <div class="col">
         <div class="card h-100">
