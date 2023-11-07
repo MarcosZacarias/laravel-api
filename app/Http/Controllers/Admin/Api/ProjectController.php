@@ -15,9 +15,16 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::orderBy('id', 'desc')
-            ->with('type', 'technologies')
+        $projects = Project::select('id', 'type_id', 'name', 'slug', 'cover_img', 'description')
+            ->with('type:id,color,label', 'technologies:id,color,label')
+            ->orderByDesc('id')
             ->paginate(12);
+
+        foreach ($projects as $project) {
+            $project->description = $project->getDescriptionIndeX(200);
+            $project->cover_img = $project->getAbsUriImage();
+        }
+        
         return response()->json($projects);
     }
 

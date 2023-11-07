@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Project extends Model
 {
@@ -21,6 +22,10 @@ class Project extends Model
 
     public function getDescriptionIndex($chars = 50){
         return strlen($this->description) > $chars ? substr($this->description, 0, $chars) ."...": $this->description ;
+    }
+
+    public function getAbsUriImage(){
+        return $this->cover_img ? Storage::url($this->cover_img) : null ;
     }
 
     public function type(){
