@@ -55,8 +55,16 @@ class ProjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project)
+    public function show($slug)
     {
+        $project = Project::select('id', 'type_id', 'name', 'slug', 'cover_img', 'description')
+        ->where('slug', $slug)
+        ->with('type:id,color,label', 'technologies:id,color,label')
+        ->first();
+
+        $project->cover_img = $project->getAbsUriImage();
+
+
         return response()->json($project);
     }
 
