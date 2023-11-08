@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Api\ProjectController;
+use App\Http\Controllers\Admin\Api\TypesController;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,3 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::resource('/projects', ProjectController::class);
+
+Route::resource('/types', TypesController::class);
